@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AX INSIDE 원데이클래스 | 과제 안내</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"/>
+<style>
+:root{
+  --navy-deep:#06091E;
+  --navy:#0D1B3E;
+  --navy-card:#0C1840;
+  --blue:#2B4FBF;
+  --blue-v:#3B6AFF;
+  --blue-light:#6B9FFF;
+  --cyan:#00D2FF;
+  --cyan-dark:#00A8CC;
+  --teal:#00C9C8;
+  --white:#FFFFFF;
+  --gray:#8B97B8;
+  --border:rgba(255,255,255,0.08);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Pretendard',sans-serif;background:var(--navy-deep);color:var(--white);line-height:1.6;letter-spacing:-0.025em;overflow-x:hidden;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;width:100%;z-index:200;padding:15px 52px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,9,30,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);}
+.nav-brand{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);}
+.nav-brand em{color:var(--white);font-style:normal;}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{color:rgba(255,255,255,0.45);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--white);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:120px 52px 80px;}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 55%,rgba(43,79,191,0.35) 0%,transparent 65%),
+    radial-gradient(ellipse 35% 30% at 75% 15%,rgba(0,210,255,0.08) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 35% at 90% 80%,rgba(0,201,200,0.06) 0%,transparent 50%),
+    var(--navy-deep);
+}
+
+/* ── GLOW PATH — 연결된 데이터 노드 (우상향 빛의 궤적) ── */
+.glow-wrap{
+  position:absolute;right:0;top:0;bottom:0;width:58%;
+  pointer-events:none;overflow:hidden;
+}
+.glow-svg{width:100%;height:100%;}
+
+/* 노드 펄스 */
+@keyframes nodePulse{
+  0%,100%{opacity:.6;r:5;}
+  50%{opacity:1;r:8;}
+}
+@keyframes nodePulse2{
+  0%,100%{opacity:.4;r:4;}
+  50%{opacity:.9;r:7;}
+}
+@keyframes pathFlow{
+  0%{stroke-dashoffset:600;}
+  100%{stroke-dashoffset:0;}
+}
+@keyframes pathGlow{
+  0%,100%{opacity:.3;}
+  50%{opacity:.7;}
+}
+@keyframes floatUp{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-8px);}
+}
+
+.hero-content{position:relative;z-index:2;max-width:620px;}
+.hero-tags{display:flex;gap:0;flex-wrap:wrap;margin-bottom:18px;}
+.hero-tag{font-size:12px;font-weight:700;color:rgba(255,255,255,0.4);}
+.hero-tag+.hero-tag::before{content:'·';margin:0 9px;color:rgba(255,255,255,0.18);}
+
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:22px;
+}
+.hero-kicker::before{content:'';width:20px;height:2px;background:var(--cyan);}
+
+.hero-title{
+  font-size:clamp(40px,5.8vw,78px);
+  font-weight:900;line-height:1.08;
+  letter-spacing:-0.045em;
+  margin-bottom:22px;
+}
+.hero-title .line-sm{
+  display:block;
+  font-size:clamp(20px,2.8vw,36px);
+  color:rgba(255,255,255,0.62);
+  font-weight:600;
+  letter-spacing:-.03em;
+  margin-bottom:8px;
+}
+.hero-title .accent-cyan{color:var(--cyan);}
+.hero-title .accent-blue{color:var(--blue-light);}
+
+.hero-sub{font-size:15px;color:rgba(255,255,255,0.5);line-height:1.75;margin-bottom:28px;max-width:540px;}
+.hero-meta{display:flex;flex-direction:column;gap:6px;margin-bottom:32px;}
+.hero-meta-item{display:flex;align-items:center;gap:10px;font-size:14px;}
+.hero-meta-item .lbl{font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,0.36);text-transform:uppercase;min-width:60px;}
+.hero-meta-item .val{font-weight:600;color:rgba(255,255,255,0.85);}
+.hero-divider{width:1px;height:14px;background:rgba(255,255,255,0.12);}
+
+/* ── 메인 CTA 버튼 — 최대 임팩트 ── */
+.btn-hero{
+  display:inline-flex;align-items:center;gap:14px;
+  background:linear-gradient(135deg,#00A8CC 0%,#00D2FF 50%,#00C9C8 100%);
+  color:var(--navy-deep);text-decoration:none;
+  padding:20px 40px;border-radius:14px;
+  font-size:15px;font-weight:900;letter-spacing:-.02em;
+  box-shadow:0 10px 50px rgba(0,210,255,0.5),0 0 0 1px rgba(0,210,255,0.3);
+  transition:transform .25s,box-shadow .25s;
+  border:none;cursor:pointer;
+  position:relative;overflow:hidden;
+}
+.btn-hero::before{
+  content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),transparent);
+  animation:shine 3.5s infinite;
+}
+@keyframes shine{0%{left:-100%}55%,100%{left:120%}}
+.btn-hero:hover{transform:translateY(-4px);box-shadow:0 18px 60px rgba(0,210,255,0.65),0 0 0 1px rgba(0,210,255,0.5);}
+.btn-hero .arr{font-size:20px;transition:transform .2s;}
+.btn-hero:hover .arr{transform:translateX(5px);}
+
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1.5px solid rgba(255,255,255,0.18);color:var(--white);text-decoration:none;padding:20px 30px;border-radius:14px;font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;}
+.btn-ghost:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.38);}
+
+/* ── SECTION ── */
+section{padding:100px 52px;}
+.inner{max-width:1100px;margin:0 auto;}
+.sec-label{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sec-label::before{content:'';width:20px;height:2px;background:var(--cyan);flex-shrink:0;}
+.sec-title{font-size:clamp(26px,3.8vw,44px);font-weight:900;letter-spacing:-.04em;line-height:1.15;margin-bottom:14px;}
+.sec-desc{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.75;max-width:500px;margin-bottom:52px;}
+.rule{height:1px;background:linear-gradient(90deg,transparent,rgba(59,106,255,0.28) 40%,rgba(0,210,255,0.18) 70%,transparent);margin:0 52px;}
+
+/* ── 3단계 PROCESS ── */
+.process-section{padding:80px 52px;background:rgba(255,255,255,0.012);border-top:1px solid rgba(255,255,255,0.05);}
+.process-inner{max-width:1100px;margin:0 auto;}
+.process-header{text-align:center;margin-bottom:52px;}
+.process-kicker{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;}
+.process-title{font-size:clamp(22px,3vw,36px);font-weight:900;letter-spacing:-.04em;}
+.process-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:0;align-items:center;}
+.proc-step{padding:30px 24px;background:var(--navy-card);border:1px solid var(--border);border-radius:20px;text-align:center;position:relative;overflow:hidden;transition:transform .25s,border-color .25s;}
+.proc-step:hover{transform:translateY(-5px);}
+.proc-step::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--step-bar);}
+.proc-1{--step-bar:linear-gradient(90deg,#3B6AFF,#5B8FFF);}.proc-1:hover{border-color:rgba(59,106,255,0.45);}
+.proc-2{--step-bar:linear-gradient(90deg,#5B8FFF,#00A8CC);}.proc-2:hover{border-color:rgba(0,168,204,0.45);}
+.proc-3{--step-bar:linear-gradient(90deg,#00A8CC,#00D2FF);}.proc-3:hover{border-color:rgba(0,210,255,0.45);}
+.proc-num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;font-size:12px;font-weight:900;margin:0 auto 14px;}
+.proc-1 .proc-num{background:rgba(59,106,255,0.2);border:1.5px solid rgba(59,106,255,0.4);color:#6B9FFF;}
+.proc-2 .proc-num{background:rgba(0,168,204,0.18);border:1.5px solid rgba(0,168,204,0.4);color:#40C8E8;}
+.proc-3 .proc-num{background:rgba(0,210,255,0.15);border:1.5px solid rgba(0,210,255,0.35);color:var(--cyan);}
+.proc-icon{font-size:34px;margin-bottom:12px;display:block;}
+.proc-label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px;}
+.proc-1 .proc-label{color:#6B9FFF;}.proc-2 .proc-label{color:#40C8E8;}.proc-3 .proc-label{color:var(--cyan);}
+.proc-name{font-size:17px;font-weight:900;letter-spacing:-.03em;margin-bottom:7px;}
+.proc-desc{font-size:12px;color:rgba(255,255,255,0.48);line-height:1.6;}
+.proc-tag{display:inline-block;margin-top:12px;padding:4px 12px;border-radius:100px;font-size:10px;font-weight:700;}
+.proc-1 .proc-tag{background:rgba(59,106,255,0.1);color:#6B9FFF;border:1px solid rgba(59,106,255,0.2);}
+.proc-2 .proc-tag{background:rgba(0,168,204,0.1);color:#40C8E8;border:1px solid rgba(0,168,204,0.2);}
+.proc-3 .proc-tag{background:rgba(0,210,255,0.1);color:var(--cyan);border:1px solid rgba(0,210,255,0.2);}
+.proc-arrow{display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 18px;}
+.proc-arrow-line{width:36px;height:1.5px;background:linear-gradient(90deg,rgba(59,106,255,0.45),rgba(0,210,255,0.45));}
+.proc-arrow-head{font-size:16px;color:rgba(255,255,255,0.25);line-height:1;}
+
+/* ── RECAP ── */
+.sessions{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.sc{background:var(--navy-card);border:1px solid var(--border);border-radius:18px;padding:30px 28px;position:relative;overflow:hidden;transition:border-color .25s,transform .25s;}
+.sc:hover{border-color:rgba(59,106,255,0.38);transform:translateY(-4px);}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--bar);}
+.s1{--bar:linear-gradient(90deg,#3B6AFF,#6B9FFF);}.s2{--bar:linear-gradient(90deg,#00C9C8,#4ECDC4);}.s3{--bar:linear-gradient(90deg,#FF8C42,#FFB347);}.s4{--bar:linear-gradient(90deg,#A855F7,#C084FC);}
+.sc-num{font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px;}
+.s1 .sc-num{color:#6B9FFF;}.s2 .sc-num{color:var(--teal);}.s3 .sc-num{color:#FFB347;}.s4 .sc-num{color:#C084FC;}
+.sc-title{font-size:17px;font-weight:800;letter-spacing:-.03em;margin-bottom:5px;}
+.sc-by{font-size:12px;color:var(--gray);margin-bottom:16px;}
+.sc-pts{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.sc-pts li{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.55;display:flex;gap:10px;align-items:flex-start;}
+.sc-pts li::before{content:'→';font-size:11px;color:rgba(107,159,255,0.55);flex-shrink:0;margin-top:2px;}
+.sc-insight{margin-top:16px;padding:11px 14px;background:rgba(0,201,200,0.07);border:1px solid rgba(0,201,200,0.14);border-radius:9px;font-size:12px;font-weight:600;color:var(--teal);line-height:1.5;}
+
+/* ── AX 꿀팁 ── */
+.tips-section{background:rgba(255,255,255,0.01);padding:100px 52px;}
+.tips-intro{max-width:1100px;margin:0 auto;}
+.tips-banner{display:flex;align-items:center;gap:22px;padding:26px 34px;background:rgba(59,106,255,0.07);border:1px solid rgba(59,106,255,0.18);border-radius:16px;margin-bottom:44px;}
+.tips-banner-icon{font-size:34px;flex-shrink:0;}
+.tips-banner-text h3{font-size:17px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
+.tips-banner-text p{font-size:13px;color:rgba(255,255,255,0.48);line-height:1.6;}
+.tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.tip-card{background:var(--navy-card);border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:transform .25s,border-color .25s;display:flex;flex-direction:column;}
+.tip-card:hover{transform:translateY(-5px);border-color:rgba(59,106,255,0.35);}
+.tip-thumb{height:170px;display:flex;align-items:center;justify-content:center;}
+.tip-thumb-24{background:linear-gradient(135deg,#0F2060,#1A3A8F);}
+.tip-thumb-25{background:linear-gradient(135deg,#0A3040,#0D5C6A);}
+.tip-thumb-26{background:linear-gradient(135deg,#1A1060,#3B2090);}
+.tip-thumb-inner{display:flex;flex-direction:column;align-items:center;gap:10px;}
+.tip-num-badge{font-size:10px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;padding:5px 14px;border-radius:100px;background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);}
+.tip-thumb-emoji{font-size:42px;line-height:1;}
+.tip-body{padding:22px 22px 26px;display:flex;flex-direction:column;flex:1;}
+.tip-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:6px;margin-bottom:11px;}
+.tag-notebook{background:rgba(0,201,200,0.12);color:var(--teal);border:1px solid rgba(0,201,200,0.2);}
+.tag-gemini{background:rgba(59,106,255,0.12);color:#6B9FFF;border:1px solid rgba(59,106,255,0.2);}
+.tag-advanced{background:rgba(168,85,247,0.12);color:#C084FC;border:1px solid rgba(168,85,247,0.2);}
+.tip-title{font-size:16px;font-weight:800;letter-spacing:-.03em;margin-bottom:7px;line-height:1.3;}
+.tip-desc{font-size:12px;color:rgba(255,255,255,0.48);line-height:1.65;margin-bottom:14px;flex:1;}
+.tip-points{list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.tip-points li{font-size:12px;color:rgba(255,255,255,0.6);display:flex;gap:7px;align-items:flex-start;line-height:1.5;}
+.tip-points li::before{content:'✓';color:var(--teal);font-size:10px;flex-shrink:0;margin-top:2px;font-weight:800;}
+.tip-relevance{padding:10px 13px;background:rgba(255,179,71,0.07);border:1px solid rgba(255,179,71,0.17);border-radius:8px;font-size:11px;color:#FFB347;font-weight:700;line-height:1.5;}
+
+/* ── 동료들의 한마디 ── */
+.voice-section{
+  padding:100px 52px;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 100%,rgba(59,106,255,0.1) 0%,transparent 60%),
+    rgba(255,255,255,0.012);
+}
+.voice-inner{max-width:1100px;margin:0 auto;}
+.voice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+/* 5번째 카드 (홀수) → 마지막 줄 2개를 가운데 정렬 */
+.voice-grid-bottom{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;max-width:720px;margin:20px auto 0;}
+
+.voice-card{
+  background:var(--navy-card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:28px 26px;
+  position:relative;overflow:hidden;
+  transition:transform .25s,border-color .25s;
+}
+.voice-card:hover{transform:translateY(-4px);border-color:rgba(0,210,255,0.25);}
+.voice-card::before{
+  content:'\201C';
+  position:absolute;top:-10px;right:20px;
+  font-size:100px;font-weight:900;
+  color:rgba(0,210,255,0.07);
+  line-height:1;pointer-events:none;
+  font-family:Georgia,serif;
+}
+.voice-dept{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 14px;border-radius:100px;
+  font-size:11px;font-weight:800;letter-spacing:.08em;
+  margin-bottom:14px;
+  background:rgba(0,210,255,0.08);
+  border:1px solid rgba(0,210,255,0.18);
+  color:var(--cyan);
+}
+.voice-text{
+  font-size:14px;color:rgba(255,255,255,0.75);
+  line-height:1.75;font-weight:500;
+  letter-spacing:-.01em;
+}
+.voice-star{
+  margin-top:16px;display:flex;gap:3px;
+}
+.voice-star span{color:var(--cyan);font-size:13px;}
+
+/* ── ASSIGNMENT ── */
+.asgn-section{
+  padding:120px 52px;
+  background:
+    radial-gradient(ellipse 75% 55% at 50% 5%,rgba(43,79,191,0.18) 0%,transparent 55%),
+    var(--navy-deep);
+}
+.asgn-inner{max-width:1100px;margin:0 auto;}
+.asgn-statement{text-align:center;margin-bottom:68px;}
+.asgn-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(0,210,255,0.09);border:1px solid rgba(0,210,255,0.22);border-radius:100px;padding:8px 20px;margin-bottom:26px;font-size:12px;font-weight:800;letter-spacing:.1em;color:var(--cyan);text-transform:uppercase;}
+.asgn-eyebrow::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.asgn-title{font-size:clamp(44px,7.5vw,88px);font-weight:900;letter-spacing:-.05em;line-height:1.0;margin-bottom:16px;}
+.asgn-title .c1{color:var(--cyan);}.asgn-title .c2{color:var(--blue-light);}
+.asgn-sub{font-size:17px;color:rgba(255,255,255,0.45);max-width:520px;margin:0 auto;line-height:1.7;}
+
+.prize-row{display:flex;align-items:stretch;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:68px;}
+.pbox{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;padding:26px 40px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;min-width:155px;position:relative;overflow:hidden;transition:all .25s;}
+.pbox:hover{border-color:rgba(0,210,255,0.28);transform:translateY(-4px);}
+.pbox.hi{background:rgba(0,210,255,0.06);border-color:rgba(0,210,255,0.22);}
+.pbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#3B6AFF,#00D2FF);}
+.pn{font-size:42px;font-weight:900;letter-spacing:-.04em;color:var(--white);line-height:1;}
+.pn.g{color:var(--cyan);}
+.pl{font-size:12px;color:var(--gray);font-weight:600;}
+
+.asgn-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:26px;align-items:start;}
+.asgn-steps{display:flex;flex-direction:column;}
+.astep{display:flex;position:relative;}
+.astep-line{position:absolute;left:19px;top:44px;bottom:0;width:2px;background:rgba(59,106,255,0.16);z-index:0;}
+.adot{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:rgba(59,106,255,0.14);border:1.5px solid rgba(59,106,255,0.32);color:var(--blue-light);z-index:1;position:relative;margin-right:18px;margin-top:4px;}
+.abody{padding-bottom:30px;}
+.atitle{font-size:15px;font-weight:800;margin-bottom:5px;letter-spacing:-.02em;}
+.adesc{font-size:13px;color:rgba(255,255,255,0.46);line-height:1.65;}
+.adesc strong{color:var(--cyan);}
+
+/* 제출 카드 */
+.submit-card{background:var(--navy-card);border:1px solid rgba(0,210,255,0.2);border-radius:24px;padding:42px 38px;position:relative;overflow:hidden;}
+.submit-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3B6AFF 0%,#00D2FF 100%);}
+.submit-card::after{content:'';position:absolute;bottom:-40px;right:-40px;width:180px;height:180px;background:rgba(0,210,255,0.04);clip-path:polygon(50% 0%,0% 100%,100% 100%);pointer-events:none;}
+.s-prize{display:inline-flex;align-items:center;gap:7px;background:rgba(255,179,71,0.09);border:1px solid rgba(255,179,71,0.22);border-radius:100px;padding:7px 17px;margin-bottom:22px;font-size:12px;font-weight:800;color:#FFB347;}
+.submit-card h3{font-size:24px;font-weight:900;letter-spacing:-.04em;margin-bottom:7px;}
+.sub-txt{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.65;margin-bottom:26px;}
+.tag-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px;}
+.ctag{padding:5px 13px;border-radius:7px;font-size:11px;font-weight:700;background:rgba(59,106,255,0.11);border:1px solid rgba(59,106,255,0.22);color:var(--blue-light);}
+.ctag.t{background:rgba(0,210,255,0.08);border-color:rgba(0,210,255,0.22);color:var(--cyan);}
+.data-note{display:flex;align-items:flex-start;gap:11px;padding:15px 17px;border-radius:11px;background:rgba(255,255,255,0.04);border:1px solid var(--border);font-size:13px;color:rgba(255,255,255,0.55);line-height:1.55;margin-bottom:16px;}
+.data-note .ico{font-size:20px;flex-shrink:0;}
+.dl-note{display:flex;align-items:center;gap:9px;padding:12px 17px;border-radius:10px;background:rgba(255,179,71,0.07);border:1px solid rgba(255,179,71,0.16);font-size:13px;color:#FFB347;font-weight:700;margin-bottom:24px;}
+
+/* 제출 버튼 최강 */
+.big-submit{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;padding:20px 26px;
+  background:linear-gradient(135deg,#0090BB 0%,#00D2FF 50%,#00BFB0 100%);
+  border:none;border-radius:14px;cursor:pointer;
+  color:var(--navy-deep);text-decoration:none;
+  box-shadow:0 12px 44px rgba(0,210,255,0.45),0 0 0 1px rgba(0,210,255,0.25) inset;
+  transition:transform .25s,box-shadow .25s;
+  position:relative;overflow:hidden;
+}
+.big-submit::before{content:'';position:absolute;top:0;left:-100%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.22),transparent);animation:shine 3s infinite;}
+.big-submit:hover{transform:translateY(-4px);box-shadow:0 20px 58px rgba(0,210,255,0.6),0 0 0 1px rgba(0,210,255,0.4) inset;}
+.submit-text-wrap{display:flex;flex-direction:column;gap:2px;text-align:left;}
+.submit-main-text{font-size:15px;font-weight:900;letter-spacing:-.025em;line-height:1.2;color:var(--navy-deep);}
+.submit-sub-text{font-size:11px;font-weight:600;color:rgba(6,9,30,0.6);letter-spacing:.03em;}
+.submit-icon{width:44px;height:44px;border-radius:10px;background:rgba(6,9,30,0.15);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:transform .2s;color:var(--navy-deep);}
+.big-submit:hover .submit-icon{transform:translateX(4px);}
+.fn{text-align:center;margin-top:9px;font-size:11px;color:rgba(255,255,255,0.26);}
+
+.purpose-box{margin-top:52px;padding:40px 48px;background:rgba(59,106,255,0.06);border:1px solid rgba(59,106,255,0.16);border-radius:22px;display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;}
+.purpose-q{font-size:56px;font-weight:900;color:rgba(0,210,255,0.22);letter-spacing:-.04em;line-height:1;}
+.purpose-text{font-size:15px;color:rgba(255,255,255,0.6);line-height:1.8;}
+.purpose-text strong{color:var(--cyan);font-weight:800;}
+
+/* ── 문의 섹션 ── */
+.contact-section{
+  padding:90px 52px;
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 50%,rgba(0,210,255,0.06) 0%,transparent 65%),
+    rgba(255,255,255,0.01);
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.contact-inner{max-width:820px;margin:0 auto;}
+.contact-kicker{font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;}
+.contact-title{font-size:clamp(26px,3.5vw,42px);font-weight:900;letter-spacing:-.04em;margin-bottom:16px;}
+.contact-desc{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:44px;max-width:560px;margin-left:auto;margin-right:auto;}
+.contact-card{
+  background:var(--navy-card);
+  border:1px solid rgba(0,210,255,0.16);
+  border-radius:24px;
+  padding:44px 56px;
+  display:inline-flex;flex-direction:column;align-items:center;gap:6px;
+  position:relative;overflow:hidden;
+  min-width:380px;
+}
+.contact-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#3B6AFF,#00D2FF);}
+.contact-card .ct-label{font-size:11px;color:var(--gray);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.contact-card .ct-name{font-size:18px;font-weight:800;letter-spacing:-.03em;margin-bottom:4px;}
+.contact-card .ct-email{font-size:15px;color:var(--cyan);font-weight:600;margin-bottom:28px;}
+.contact-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:15px 36px;border-radius:12px;
+  background:rgba(0,210,255,0.1);
+  border:1.5px solid rgba(0,210,255,0.28);
+  color:var(--cyan);text-decoration:none;
+  font-size:14px;font-weight:800;
+  transition:all .2s;
+}
+.contact-btn:hover{background:rgba(0,210,255,0.18);border-color:rgba(0,210,255,0.5);transform:translateY(-2px);}
+
+/* ── ROADMAP ── */
+.roadmap-section{background:rgba(255,255,255,0.012);}
+.rm-row{display:flex;overflow-x:auto;padding-bottom:16px;scrollbar-width:thin;scrollbar-color:rgba(0,210,255,0.2) transparent;}
+.rmi{flex-shrink:0;min-width:142px;padding-right:10px;}
+.rmc{display:flex;align-items:center;margin-bottom:12px;}
+.rmd{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;letter-spacing:.04em;border:1.5px solid rgba(107,159,255,0.2);background:rgba(59,106,255,0.07);color:var(--gray);flex-shrink:0;}
+.rmd.now{border-color:#00D2FF;background:rgba(0,210,255,0.15);color:var(--white);box-shadow:0 0 16px rgba(0,210,255,0.35);}
+.rml{flex:1;height:1px;background:rgba(107,159,255,0.12);}
+.rm-month{font-size:10px;color:var(--gray);font-weight:700;letter-spacing:.06em;margin-bottom:3px;}
+.rm-course{font-size:12px;font-weight:700;color:rgba(255,255,255,0.65);line-height:1.4;}
+.rm-course.now{color:var(--cyan);}
+
+/* ── FOOTER ── */
+footer{padding:40px 52px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:18px;}
+.ft-brand{font-size:12px;font-weight:800;letter-spacing:.1em;color:rgba(255,255,255,0.28);}
+.ft-brand em{color:var(--cyan);font-style:normal;}
+.ft-links{display:flex;gap:26px;}
+.ft-links a{font-size:13px;color:rgba(255,255,255,0.28);text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:rgba(255,255,255,.65);}
+
+@media(max-width:860px){
+  nav{padding:14px 22px;}.nav-links{display:none;}
+  section,.asgn-section,.tips-section,.process-section,.voice-section,.contact-section,.roadmap-section{padding:72px 22px;}
+  .sessions,.asgn-grid,.tips-grid,.process-flow{grid-template-columns:1fr;}
+  .voice-grid,.voice-grid-bottom{grid-template-columns:1fr;}
+  .proc-arrow{display:none;}
+  .glow-wrap{opacity:.2;}.hero-title{font-size:42px;}
+  .asgn-title{font-size:48px;}
+  .purpose-box{grid-template-columns:1fr;}
+  .contact-card{min-width:unset;width:100%;padding:36px 28px;}
+  footer{flex-direction:column;}.rule{margin:0 22px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">AX <em>INSIDE</em></div>
+  <div class="nav-links">
+    <a href="#recap">교육 요약</a>
+    <a href="#tips">AX 꿀팁</a>
+    <a href="#voices">동료 후기</a>
+    <a href="#assignment">과제 제출 ★</a>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <!-- 글로우 패스 — 연결된 데이터 노드 (우상향 빛의 궤적) -->
+  <div class="glow-wrap">
+    <svg class="glow-svg" viewBox="0 0 700 800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow2" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glowNode" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="pathGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#3B6AFF" stop-opacity="0"/>
+          <stop offset="40%" stop-color="#3B6AFF" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#00D2FF" stop-opacity="0.8"/>
+        </linearGradient>
+        <linearGradient id="pathGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#2B4FBF" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#00A8CC" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#00D2FF" stop-opacity="0.6"/>
+        </linearGradient>
+        <linearGradient id="pathGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1A3399" stop-opacity="0"/>
+          <stop offset="60%" stop-color="#3B6AFF" stop-opacity="0.3"/>
+          <stop offset="100%" stop-color="#6B9FFF" stop-opacity="0.5"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 배경 분위기 글로우 블롭 -->
+      <ellipse cx="500" cy="400" rx="280" ry="220" fill="rgba(59,106,255,0.04)" filter="url(#glow2)"/>
+      <ellipse cx="580" cy="200" rx="160" ry="120" fill="rgba(0,210,255,0.05)" filter="url(#glow2)"/>
+
+      <!-- 메인 글로우 패스 1 (주 궤적 — 우상향) -->
+      <path d="M 80 780 C 120 680, 160 600, 220 520 C 290 430, 340 370, 410 290 C 480 210, 540 160, 620 80"
+            stroke="url(#pathGrad1)" stroke-width="2" fill="none" filter="url(#glow)"
+            stroke-dasharray="600" stroke-dashoffset="600" opacity="0.9">
+        <animate attributeName="stroke-dashoffset" values="600;0;0" dur="2.5s" begin="0.3s" fill="freeze" calcMode="ease"/>
+        <animate attributeName="opacity" values="0.9;0.5;0.9" dur="4s" repeatCount="indefinite" begin="3s"/>
+      </path>
+      <!-- 글로우 두께 강조 (흐린 겹) -->
+      <path d="M 80 780 C 120 680, 160 600, 220 520 C 290 430, 340 370, 410 290 C 480 210, 540 160, 620 80"
+            stroke="url(#pathGrad1)" stroke-width="8" fill="none" filter="url(#glow2)" opacity="0.3">
+        <animate attributeName="opacity" values="0.3;0.15;0.3" dur="4s" repeatCount="indefinite" begin="3s"/>
+      </path>
+
+      <!-- 패스 2 (보조 궤적) -->
+      <path d="M 180 800 C 200 720, 260 640, 320 560 C 390 470, 450 400, 510 320 C 565 245, 610 190, 680 110"
+            stroke="url(#pathGrad2)" stroke-width="1.5" fill="none" filter="url(#glow)"
+            stroke-dasharray="550" stroke-dashoffset="550" opacity="0.6">
+        <animate attributeName="stroke-dashoffset" values="550;0;0" dur="2.8s" begin="0.6s" fill="freeze" calcMode="ease"/>
+      </path>
+
+      <!-- 패스 3 (배경 흐린 궤적) -->
+      <path d="M 20 740 C 80 650, 150 570, 240 480 C 320 400, 400 330, 480 240 C 550 160, 600 110, 670 40"
+            stroke="url(#pathGrad3)" stroke-width="1" fill="none" filter="url(#glow)" opacity="0.35">
+        <animate attributeName="opacity" values="0.35;0.15;0.35" dur="5s" repeatCount="indefinite" begin="1s"/>
+      </path>
+
+      <!-- 노드들 — 궤적 위의 빛나는 점들 -->
+      <!-- 노드 1 (하단) -->
+      <g filter="url(#glowNode)" opacity="0">
+        <animate attributeName="opacity" values="0;1" dur="0.3s" begin="1s" fill="freeze"/>
+        <circle cx="220" cy="520" r="5" fill="#3B6AFF">
+          <animate attributeName="r" values="5;8;5" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="fill" values="#3B6AFF;#00D2FF;#3B6AFF" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="220" cy="520" r="14" fill="rgba(59,106,255,0.15)"/>
+      </g>
+      <!-- 노드 2 -->
+      <g filter="url(#glowNode)" opacity="0">
+        <animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.4s" fill="freeze"/>
+        <circle cx="340" cy="370" r="6" fill="#5B8FFF">
+          <animate attributeName="r" values="6;9;6" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
+        </circle>
+        <circle cx="340" cy="370" r="18" fill="rgba(91,143,255,0.12)"/>
+      </g>
+      <!-- 노드 3 (메인 하이라이트) -->
+      <g filter="url(#glowNode)" opacity="0">
+        <animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.8s" fill="freeze"/>
+        <circle cx="410" cy="290" r="8" fill="#00D2FF">
+          <animate attributeName="r" values="8;12;8" dur="2.8s" repeatCount="indefinite" begin="0.3s"/>
+          <animate attributeName="fill" values="#00D2FF;#00C9C8;#00D2FF" dur="2.8s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="410" cy="290" r="22" fill="rgba(0,210,255,0.12)"/>
+        <circle cx="410" cy="290" r="36" fill="rgba(0,210,255,0.05)"/>
+      </g>
+      <!-- 노드 4 -->
+      <g filter="url(#glowNode)" opacity="0">
+        <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2.1s" fill="freeze"/>
+        <circle cx="510" cy="185" r="5" fill="#00A8CC">
+          <animate attributeName="r" values="5;8;5" dur="3.2s" repeatCount="indefinite" begin="1s"/>
+        </circle>
+        <circle cx="510" cy="185" r="15" fill="rgba(0,168,204,0.1)"/>
+      </g>
+      <!-- 노드 5 (최상단) -->
+      <g filter="url(#glowNode)" opacity="0">
+        <animate attributeName="opacity" values="0;1" dur="0.3s" begin="2.4s" fill="freeze"/>
+        <circle cx="620" cy="80" r="7" fill="#00D2FF">
+          <animate attributeName="r" values="7;11;7" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+          <animate attributeName="fill" values="#00D2FF;#FFFFFF;#00D2FF" dur="2.5s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="620" cy="80" r="20" fill="rgba(0,210,255,0.15)"/>
+        <circle cx="620" cy="80" r="38" fill="rgba(0,210,255,0.05)"/>
+      </g>
+
+      <!-- 부유하는 작은 파티클들 -->
+      <circle cx="160" cy="620" r="2" fill="rgba(107,159,255,0.5)">
+        <animate attributeName="cy" values="620;605;620" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.5;0.9;0.5" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="480" cy="400" r="2.5" fill="rgba(0,210,255,0.45)">
+        <animate attributeName="cy" values="400;385;400" dur="3.5s" repeatCount="indefinite" begin="1s"/>
+        <animate attributeName="opacity" values="0.45;0.8;0.45" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="580" cy="250" r="2" fill="rgba(0,201,200,0.5)">
+        <animate attributeName="cy" values="250;238;250" dur="5s" repeatCount="indefinite" begin="2s"/>
+      </circle>
+      <circle cx="300" cy="480" r="1.5" fill="rgba(107,159,255,0.4)">
+        <animate attributeName="cy" values="480;467;480" dur="4.2s" repeatCount="indefinite" begin="0.5s"/>
+      </circle>
+
+      <!-- 노드 간 보조 연결선 (점선 느낌) -->
+      <line x1="220" y1="520" x2="340" y2="370" stroke="rgba(107,159,255,0.15)" stroke-width="1" stroke-dasharray="4 6"/>
+      <line x1="340" y1="370" x2="410" y2="290" stroke="rgba(0,168,204,0.2)" stroke-width="1" stroke-dasharray="4 6"/>
+      <line x1="410" y1="290" x2="510" y2="185" stroke="rgba(0,210,255,0.2)" stroke-width="1" stroke-dasharray="4 6"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-tags">
+      <span class="hero-tag">#Agentic Work</span>
+      <span class="hero-tag">#Data-Driven Culture</span>
+      <span class="hero-tag">#Performance Edge</span>
+    </div>
+    <div class="hero-kicker">원데이 클래스 과제 안내</div>
+
+    <h1 class="hero-title">
+      <span class="line-sm">배움이 성과가 되는 시간</span>
+      이제 당신의 업무가<br><span class="accent-cyan">AI와 함께</span> 다시 정의됩니다
+    </h1>
+
+    <p class="hero-sub">
+      강의실에서의 경험이 실무 Solution이 되는 순간,<br>진정한 AX 여정이 완성됩니다.<br>
+      텍스트를 넘어 당신만의 결과물을 만들어보세요.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="lbl">강의일자</span>
+        <span class="val">2026.04.13</span>
+      </div>
+      <div class="hero-meta-item">
+        <span class="lbl">강사</span>
+        <span class="val">피플팀 김창중님 · 영업지원팀 박지혜님</span>
+      </div>
+    </div>
+
+    <div class="hero-cta" style="display:flex;gap:14px;flex-wrap:wrap;">
+      <a href="#assignment" class="btn-hero">
+        데이터 활용(시각화/자동화) 과제 제출하기 <span class="arr">→</span>
+      </a>
+      <a href="#recap" class="btn-ghost">교육 복습</a>
+    </div>
+  </div>
+</section>
+
+<!-- 3단계 프로세스 -->
+<section class="process-section" id="process">
+  <div class="process-inner">
+    <div class="process-header">
+      <div class="process-kicker">Our AX Journey</div>
+      <h2 class="process-title">우리가 함께 걸어온 3단계</h2>
+    </div>
+    <div class="process-flow">
+      <div class="proc-step proc-1">
+        <div class="proc-num">01</div>
+        <span class="proc-icon">🔍</span>
+        <div class="proc-label">Pain Point 인식</div>
+        <div class="proc-name">문제를 정의한다</div>
+        <div class="proc-desc">반복 수작업, 데이터 흩어짐, 보고서 수기 작성… 우리 업무의 비효율을 명확히 짚는 것이 시작</div>
+        <span class="proc-tag">현업 문제 발굴</span>
+      </div>
+      <div class="proc-arrow"><div class="proc-arrow-line"></div><div class="proc-arrow-head">›</div></div>
+      <div class="proc-step proc-2">
+        <div class="proc-num">02</div>
+        <span class="proc-icon">🤖</span>
+        <div class="proc-label">AI 활용 해결</div>
+        <div class="proc-name">도구로 풀어낸다</div>
+        <div class="proc-desc">생성형AI·VBA·Gemini·NotebookLM… 오늘 배운 도구들로 문제에 직접 대입하고 해결해보는 실전 경험</div>
+        <span class="proc-tag">실습 & 적용</span>
+      </div>
+      <div class="proc-arrow"><div class="proc-arrow-line"></div><div class="proc-arrow-head">›</div></div>
+      <div class="proc-step proc-3">
+        <div class="proc-num">03</div>
+        <span class="proc-icon">🚀</span>
+        <div class="proc-label">업무 방식 혁신</div>
+        <div class="proc-name">일하는 방식이 바뀐다</div>
+        <div class="proc-desc">단순 학습이 아닌 실질적인 성과와 시간 절감. 우리의 AX는 숫자로 증명되어야 한다</div>
+        <span class="proc-tag">Performance Edge</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- RECAP -->
+<section id="recap">
+  <div class="inner">
+    <div class="sec-label">Education Recap</div>
+    <h2 class="sec-title">우리가 함께 나눈 이야기</h2>
+    <p class="sec-desc">4월 13일, 함께했던 4개 세션의 핵심 내용을 돌아보세요.<br>이제 여러분의 업무에 직접 적용해 볼 시간입니다.</p>
+    <div class="sessions">
+      <div class="sc s1">
+        <div class="sc-num">Session 01 · AI 우수사례</div>
+        <div class="sc-title">우유안부 결산서 자동화</div>
+        <div class="sc-by">영업지원팀 박지혜님</div>
+        <ul class="sc-pts">
+          <li>월 85개 결산서 수기작성 → ChatGPT+VBA로 자동 생성</li>
+          <li>3단계 접근: 요구사항 분석 → 코드 생성 → 검증·적용</li>
+          <li>정량 성과: 지역사업부 월 결산 수기작업 시간 4시간 단축</li>
+        </ul>
+        <div class="sc-insight">💡 업무 본질 파악이 AX 성과를 극대화한다</div>
+      </div>
+      <div class="sc s2">
+        <div class="sc-num">Session 02 · VBA 첫걸음</div>
+        <div class="sc-title">엑셀 VBA & 바이브코딩 개념</div>
+        <div class="sc-by">피플팀 김창중님</div>
+        <ul class="sc-pts">
+          <li>VBA = 엑셀 내장 자동화 언어, 별도 설치 불필요</li>
+          <li>바이브코딩 = 자연어 명령으로 AI가 코드 대신 작성</li>
+          <li>Alt+F11(편집) / Alt+F8(실행) 핵심 단축키</li>
+        </ul>
+        <div class="sc-insight">💡 AI로 VBA 생성 → 매크로 실행 → 지금 바로 업무에 적용해보세요</div>
+      </div>
+      <div class="sc s3">
+        <div class="sc-num">Session 03 · VBA 실습</div>
+        <div class="sc-title">단계별 자동화 실습</div>
+        <div class="sc-by">피플팀 김창중님</div>
+        <ul class="sc-pts">
+          <li>프롬프트 3원칙: 역할 부여 + 데이터 설명 + 결과 명시</li>
+          <li>실습1~5: 데이터 정리→요약→서식→차트→이메일 발송</li>
+          <li>저장 시 반드시 .xlsm 형식 (매크로 포함)</li>
+        </ul>
+        <div class="sc-insight">💡 코드 이해보다 AI에게 정확히 요청하는 법, 기억하시나요?</div>
+      </div>
+      <div class="sc s4">
+        <div class="sc-num">Session 04 · AI툴 3선</div>
+        <div class="sc-title">데이터 분석·시각화·보고서</div>
+        <div class="sc-by">피플팀 김창중님</div>
+        <ul class="sc-pts">
+          <li>Claude in Excel: 엑셀 안에서 AI 작업 요청 (추가기능)</li>
+          <li>Gemini Canvas: 파일 업로드 → 대시보드 자동 생성</li>
+          <li>NotebookLM: PDF 업로드 → 요약/Q&A/오디오 변환</li>
+        </ul>
+        <div class="sc-insight">💡 사후과제 활용 도구: Gemini Canvas 또는 NotebookLM으로 직접 만들어보세요</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- AX 꿀팁 -->
+<section id="tips" class="tips-section">
+  <div class="tips-intro">
+    <div class="sec-label">AX 꿀팁 · 추가 학습 가이드</div>
+    <h2 class="sec-title">사후과제 전에<br>이것부터 읽어보세요</h2>
+    <p class="sec-desc">과제에서 활용할 Gemini Canvas와 NotebookLM,<br>실전 활용법을 미리 숙지하면 훨씬 수월합니다.</p>
+    <div class="tips-banner">
+      <div class="tips-banner-icon">📌</div>
+      <div class="tips-banner-text">
+        <h3>AX 꿀팁 24~26탄은 사후과제 직접 참고자료입니다</h3>
+        <p>두드림에 업로드된 AX/DX 뉴스레터 콘텐츠입니다. 과제 제출 전 순서대로 한 번씩 읽어보시면 어떻게 시작할지, 어떤 프롬프트를 써야 할지 감이 잡히실 거예요.</p>
+      </div>
+    </div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-thumb tip-thumb-24"><div class="tip-thumb-inner"><div class="tip-num-badge">AX 꿀팁 24탄</div><div class="tip-thumb-emoji">📚</div></div></div>
+        <div class="tip-body">
+          <span class="tip-tag tag-notebook">NotebookLM</span>
+          <div class="tip-title">Google NotebookLM<br>마스터 가이드</div>
+          <div class="tip-desc">방대한 보고서 속 핵심만 뽑아내는 요약 끝판왕. 내 자료 범위 안에서만 정확하게 답변합니다.</div>
+          <ul class="tip-points">
+            <li>PDF·PPT·워드 등 다양한 소스 업로드 가능</li>
+            <li>인포그래픽, 팟캐스트, 마인드맵 등 다양한 결과물</li>
+            <li>출처 기반 답변 → 할루시네이션 최소화</li>
+          </ul>
+          <div class="tip-relevance">📎 사업보고서 소스 등록 → "연도별 주요 성과 비교표 만들어줘" 바로 적용</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-thumb tip-thumb-25"><div class="tip-thumb-inner"><div class="tip-num-badge">AX 꿀팁 25탄</div><div class="tip-thumb-emoji">📊</div></div></div>
+        <div class="tip-body">
+          <span class="tip-tag tag-gemini">Gemini Canvas</span>
+          <div class="tip-title">Gemini로 3단계면<br>대시보드 완성!</div>
+          <div class="tip-desc">엑셀 초보도 1분 만에 인터랙티브 대시보드를. CSV/엑셀 파일만 있으면 Gemini Pro가 분석·시각화합니다.</div>
+          <ul class="tip-points">
+            <li>1단계: Pro 모델 + Canvas 기능 선택</li>
+            <li>2단계: CSV/엑셀 파일 첨부 + 프롬프트 작성</li>
+            <li>3단계: 차트 수정 후 공유 링크 생성</li>
+          </ul>
+          <div class="tip-relevance">📎 사업보고서 데이터를 CSV로 정리 → Gemini Canvas 업로드 → 대시보드 자동 생성</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-thumb tip-thumb-26"><div class="tip-thumb-inner"><div class="tip-num-badge">AX 꿀팁 26탄</div><div class="tip-thumb-emoji">🎯</div></div></div>
+        <div class="tip-body">
+          <span class="tip-tag tag-advanced">심화 활용</span>
+          <div class="tip-title">대시보드 필터링부터<br>PPT 보고서 활용까지</div>
+          <div class="tip-desc">Tab 기능으로 다각도 분석하고, SVG로 뽑아 PPT 보고서로 완성하는 심화 활용법.</div>
+          <ul class="tip-points">
+            <li>Tab 추가: 연도·부서·제품별 데이터 분리 파악</li>
+            <li>SVG 파일 다운로드 → PPT 도형으로 변환 후 편집</li>
+            <li>보고서 스타일에 맞게 직접 수정 가능</li>
+          </ul>
+          <div class="tip-relevance">📎 대시보드 SVG 추출 → PPT 삽입으로 보고서 수준 결과물 제출 가능</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ══ 동료들의 한마디 ══ -->
+<section id="voices" class="voice-section">
+  <div class="voice-inner">
+    <div class="sec-label">동료들의 한마디</div>
+    <h2 class="sec-title">함께 시작하는 AX,<br>동료들의 이야기</h2>
+    <p class="sec-desc">먼저 경험한 동료들의 진짜 목소리입니다.<br>우리 모두의 이야기가 될 수 있습니다.</p>
+
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-dept">영업</div>
+        <div class="voice-text">"3시간 걸리던 데이터 정산이 클릭 한 번에 끝났어요. 진짜 업무가 가벼워지는 경험입니다."</div>
+        <div class="voice-star"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-dept">마케팅</div>
+        <div class="voice-text">"카피 짜느라 며칠 고생했는데, AI와 협업하니 1시간 만에 기획안이 나왔어요. 든든한 파트너를 얻었습니다."</div>
+        <div class="voice-star"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-dept">생산 · 물류</div>
+        <div class="voice-text">"비전공자라 걱정했는데, 우리 현업 문제를 직접 해결해보니 '나도 할 수 있다'는 확신이 생겼습니다."</div>
+        <div class="voice-star"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+    <div class="voice-grid-bottom">
+      <div class="voice-card">
+        <div class="voice-dept">지원부서</div>
+        <div class="voice-text">"반복되는 문의 응대를 챗봇에 맡기니, 비로소 중요한 기획 업무에 집중할 수 있게 됐어요."</div>
+        <div class="voice-star"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+      <div class="voice-card">
+        <div class="voice-dept">기획 · 재경</div>
+        <div class="voice-text">"데이터 정리보다 분석에 시간을 더 쓰게 됐습니다. 보고서의 질이 달라졌다는 칭찬을 들었어요."</div>
+        <div class="voice-star"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ══ ASSIGNMENT ══ -->
+<section id="assignment" class="asgn-section">
+  <div class="asgn-inner">
+    <div class="asgn-statement">
+      <div class="asgn-eyebrow">Post Assignment</div>
+      <h2 class="asgn-title">이제 직접<br><span class="c1">만들어</span> <span class="c2">보세요</span></h2>
+      <p class="asgn-sub">보는 것에서 그치지 않고, AI로 데이터를 직접 다루는 순간이<br>여러분의 첫 번째 AX 경험이 됩니다.</p>
+    </div>
+    <div class="prize-row">
+      <div class="pbox"><div class="pn">3</div><div class="pl">개년 사업보고서</div></div>
+      <div class="pbox"><div class="pn">2</div><div class="pl">가지 도구 중 선택</div></div>
+      <div class="pbox hi"><div class="pn g">10</div><div class="pl">명 우수제출자 선정</div></div>
+      <div class="pbox hi"><div class="pn g">2만</div><div class="pl">매일런업 포인트 지급</div></div>
+    </div>
+    <div class="asgn-grid">
+      <div class="asgn-steps">
+        <div class="astep">
+          <div class="astep-line"></div>
+          <div class="adot">1</div>
+          <div class="abody">
+            <div class="atitle">데이터 준비</div>
+            <div class="adesc">교육 담당자(오준석 리더)가 메일로 발송한 <strong>매일유업 3개년 사업보고서 자료</strong>를 확인해주세요<br>수신하지 못하셨다면 junseok.oh@maeil.com으로 문의해주세요</div>
+          </div>
+        </div>
+        <div class="astep">
+          <div class="astep-line"></div>
+          <div class="adot">2</div>
+          <div class="abody">
+            <div class="atitle">도구 선택 & 시각화 제작</div>
+            <div class="adesc">
+              <strong>Gemini Canvas</strong>: gemini.google.com → Canvas 버튼 → 파일 첨부 → 대시보드 자동 생성 (꿀팁 25·26탄 참고)<br><br>
+              <strong>NotebookLM</strong>: notebooklm.google.com → 문서 업로드 → 분석·시각화 자료 제작 (꿀팁 24탄 참고)
+            </div>
+          </div>
+        </div>
+        <div class="astep">
+          <div class="astep-line"></div>
+          <div class="adot">3</div>
+          <div class="abody">
+            <div class="atitle">결과물 정리</div>
+            <div class="adesc">대시보드 캡처 또는 링크 저장<br>활용한 프롬프트도 함께 메모해두세요 (우수작 선정 시 참고)</div>
+          </div>
+        </div>
+        <div class="astep">
+          <div class="adot">4</div>
+          <div class="abody">
+            <div class="atitle">제출</div>
+            <div class="adesc">아래 SharePoint 폴더에 파일 업로드<br>파일명: <strong>이름_부서_날짜</strong> 예) 오준석_인재개발팀_0430</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-card">
+        <div class="s-prize">🏆 우수 10명 선정 · 매일런업 포인트 2만원</div>
+        <h3>데이터 시각화 과제</h3>
+        <p class="sub-txt">매일유업 3개년 사업보고서 데이터를 활용해<br>나만의 대시보드 또는 시각화 자료를 만들어 제출해주세요.</p>
+        <div style="font-size:11px;color:var(--gray);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;">사용 가능 도구</div>
+        <div class="tag-row">
+          <span class="ctag t">Gemini Canvas</span>
+          <span class="ctag t">NotebookLM</span>
+          <span class="ctag">Claude in Excel</span>
+          <span class="ctag">기타 AI 도구</span>
+        </div>
+        <div class="data-note">
+          <span class="ico">📧</span>
+          <span><strong style="color:var(--white)">데이터: 매일유업 3개년 사업보고서</strong><br><span style="font-size:12px;color:var(--gray)">교육 담당자가 메일로 발송 예정 · 문의: junseok.oh@maeil.com</span></span>
+        </div>
+        <div class="dl-note">⏰ 제출 기한: 4월 17일(금) ~ 4월 27일(월)</div>
+        <a href="https://maeil365.sharepoint.com/:f:/s/msteams_7121bd/IgC4W66SjlBcTYyXdTt2VqI1AaEoU5JHLaQaXk0KHS-olas?e=WCyubJ" target="_blank" class="big-submit">
+          <div class="submit-text-wrap">
+            <span class="submit-main-text">데이터 활용(시각화/자동화) 과제 제출하기</span>
+            <span class="submit-sub-text">SharePoint 폴더에 파일 업로드</span>
+          </div>
+          <div class="submit-icon">→</div>
+        </a>
+        <p class="fn">파일명: 이름_부서명_제출일 형식으로 저장해주세요</p>
+      </div>
+    </div>
+
+    <div class="purpose-box">
+      <div class="purpose-q">"</div>
+      <div class="purpose-text">
+        이 과제의 목적은 <strong>잘 만든 결과물이 아닙니다.</strong><br>
+        오늘 배운 도구로 <strong>실제 우리 회사 데이터를 분석하고 시각화해보는 경험</strong> 자체가 목적입니다.
+        완벽하지 않아도 괜찮습니다. 직접 해봤다는 그 경험이, 업무 방식을 바꾸는 첫 번째 AX 순간이 됩니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ROADMAP -->
+<section id="roadmap" class="roadmap-section">
+  <div class="inner">
+    <div class="sec-label">2026 AX INSIDE · INSIDE+</div>
+    <h2 class="sec-title">연간 원데이클래스 로드맵</h2>
+    <p class="sec-desc">지금 이 경험이 연말 Best Practice로 이어집니다.</p>
+    <div class="rm-row">
+      <div class="rmi"><div class="rmc"><div class="rmd now">4월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course now">VBA&AI<br>업무자동화(1) ✓</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd">5월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course">VBA&AI<br>업무자동화(2)</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd" style="border-color:rgba(160,200,255,0.35);color:#A0C8FF;">6월</div><div class="rml"></div></div><div class="rm-month" style="color:#A0C8FF;">AX INSIDE+</div><div class="rm-course" style="color:rgba(255,255,255,0.55);">데이터기반<br>의사결정<span style="display:block;font-size:10px;font-weight:700;color:#A0C8FF;margin-top:3px;letter-spacing:.04em;">사외강사</span></div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd">7월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course">AI Agent<br>제작</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd" style="border-color:rgba(160,200,255,0.35);color:#A0C8FF;">8월</div><div class="rml"></div></div><div class="rm-month" style="color:#A0C8FF;">AX INSIDE+</div><div class="rm-course" style="color:rgba(255,255,255,0.55);">커스텀 Agent<br>설계<span style="display:block;font-size:10px;font-weight:700;color:#A0C8FF;margin-top:3px;letter-spacing:.04em;">사외강사</span></div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd">9월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course">파워플랫폼<br>업무자동화</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd">11월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course">지능형<br>챗봇 제작</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd">12월</div><div class="rml"></div></div><div class="rm-month">AX INSIDE</div><div class="rm-course">AI마케팅<br>콘텐츠제작</div></div>
+      <div class="rmi"><div class="rmc"><div class="rmd" style="border-color:rgba(255,179,71,.42);color:#FFB347;background:rgba(255,179,71,.07);">연말</div></div><div class="rm-month" style="color:#FFB347;">Best Practice</div><div class="rm-course" style="color:#FFB347;">우수사례 공모 🏆</div></div>
+    </div>
+
+    <!-- 하단 슬로건 -->
+    <div style="margin-top:52px;text-align:center;padding:32px 40px;background:rgba(0,210,255,0.06);border:1px solid rgba(0,210,255,0.15);border-radius:18px;">
+      <div style="font-size:clamp(18px,2.5vw,26px);font-weight:900;letter-spacing:-.03em;color:var(--white);margin-bottom:8px;">
+        개인의 AI 활용경험을 <span style="color:var(--cyan);">조직의 자산으로!</span>
+      </div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.38);font-weight:500;">
+        한 명의 경험이 쌓여 우리 모두의 업무 방식이 바뀝니다
+      </div>
+    </div>
+
+    <!-- 범례 -->
+    <div style="margin-top:20px;display:flex;gap:20px;justify-content:flex-end;align-items:center;">
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,0.4);font-weight:600;">
+        <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(107,159,255,0.4);background:rgba(59,106,255,0.1);"></div>
+        사내강사 운영
+      </div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(160,200,255,0.7);font-weight:600;">
+        <div style="width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(160,200,255,0.4);background:rgba(160,200,255,0.08);"></div>
+        사외강사 운영 (AX INSIDE+)
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ══ 문의 섹션 ══ -->
+<section id="contact" class="contact-section">
+  <div class="contact-inner">
+    <div class="contact-kicker">Support</div>
+    <h2 class="contact-title">도움이 필요하신가요?</h2>
+    <p class="contact-desc">
+      과제 진행 중 막히는 부분이 있다면 언제든 말씀해 주세요.<br>
+      여러분의 첫 번째 AX 도전을 지원합니다.
+    </p>
+    <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+
+      <!-- 오준석님 — 과제 전반 -->
+      <div class="contact-card">
+        <div class="ct-label">원데이클래스 · 사후과제 문의</div>
+        <div class="ct-name">인재개발팀 오준석님</div>
+        <div class="ct-email">junseok.oh@maeil.com</div>
+        <a href="mailto:junseok.oh@maeil.com?subject=[AX 사후과제 문의]" class="contact-btn">
+          ✉ 문의사항 남기기
+        </a>
+      </div>
+
+      <!-- 김지은님 — AX 꿀팁 -->
+      <div class="contact-card">
+        <div class="ct-label">AX 꿀팁 관련 문의</div>
+        <div class="ct-name">인재개발팀 김지은님</div>
+        <div class="ct-email">genie@maeil.com</div>
+        <a href="mailto:genie@maeil.com?subject=[AX 꿀팁 문의]" class="contact-btn">
+          ✉ 문의사항 남기기
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand"><em>AX INSIDE</em> 원데이 클래스 · 2026 매일유업 CHO 인재개발팀</div>
+  <div class="ft-links">
+    <a href="https://maeil-ax.github.io/maeil-ax-inside/" target="_blank">교육 안내 페이지 →</a>
+    <a href="#assignment">과제 제출</a>
+    <a href="#contact">문의하기</a>
+  </div>
+</footer>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();window.scrollTo({top:t.offsetTop-68,behavior:'smooth'});}
+  });
+});
+</script>
+</body>
+</html>
