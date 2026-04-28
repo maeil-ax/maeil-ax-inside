@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maeil AX 2026 | AX INSIDE 원데이클래스 2차수</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --navy-deep:#07111f;--navy-mid:#0d1e35;--navy-card:#112240;
+  --blue:#3b82f6;--blue-lt:#60a5fa;--cyan:#38bdf8;--red:#ef4444;
+  --teal:#00c9c8;--teal-dk:#00a8b0;
+  --white:#fff;--gs:#94a3b8;--gm:#64748b;
+  --bdr:rgba(255,255,255,.07);--bdr-b:rgba(59,130,246,.22);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',sans-serif;background:var(--navy-deep);color:var(--white);overflow-x:hidden;letter-spacing:-.02em;word-break:keep-all;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 60px;background:rgba(7,17,31,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);}
+.logo{font-size:19px;font-weight:900;letter-spacing:-.5px;}
+.logo span{color:var(--blue-lt);}
+.nav-r{font-size:13px;color:var(--gs);}
+.nav-dot{color:var(--blue);}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 38%,rgba(59,130,246,.14) 0%,transparent 70%),linear-gradient(180deg,var(--navy-deep) 0%,#0a1830 100%);}
+.hero-bg::after{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(59,130,246,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(59,130,246,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%);}
+.hc{position:relative;z-index:1;max-width:840px;width:100%;}
+
+.badge{display:inline-flex;align-items:center;gap:7px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:100px;padding:7px 20px;font-size:12px;font-weight:600;color:var(--blue-lt);margin-bottom:28px;letter-spacing:.02em;}
+.badge-2nd{background:rgba(0,201,200,.12);border-color:rgba(0,201,200,.3);color:var(--teal);}
+.hero-title{font-size:clamp(36px,6.5vw,70px);font-weight:800;line-height:1.1;letter-spacing:-.04em;margin-bottom:16px;}
+.hl{color:var(--blue-lt);}
+.hero-sub{font-size:clamp(14px,2vw,18px);font-weight:500;color:var(--gs);margin-bottom:12px;letter-spacing:-.01em;}
+.hero-desc{font-size:14px;color:var(--gm);line-height:1.75;margin-bottom:32px;letter-spacing:-.01em;}
+
+/* 마감 배너 */
+.deadline-banner{display:flex;align-items:center;justify-content:center;gap:10px;background:rgba(0,201,200,.1);border:1px solid rgba(0,201,200,.35);border-radius:12px;padding:14px 28px;margin-bottom:20px;flex-wrap:wrap;}
+.deadline-banner .dl-label{font-size:13px;font-weight:700;color:var(--teal);letter-spacing:.04em;}
+.deadline-banner .dl-date{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.03em;}
+.deadline-banner .dl-link{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:var(--navy-deep);font-size:13px;font-weight:800;padding:8px 20px;border-radius:100px;text-decoration:none;transition:all .2s;}
+.deadline-banner .dl-link:hover{background:var(--teal-dk);}
+
+.chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:34px;}
+.chip{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.05);border:1px solid var(--bdr);border-radius:100px;padding:8px 16px;font-size:13px;color:var(--gs);white-space:nowrap;}
+.chip strong{color:var(--white);}
+
+.cta-g{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:#fff;font-size:16px;font-weight:700;padding:16px 48px;border-radius:14px;text-decoration:none;transition:all .25s;box-shadow:0 0 40px rgba(59,130,246,.35);}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(59,130,246,.5);}
+.dl{font-size:13px;color:var(--gm);}
+.dl strong{color:var(--blue-lt);}
+.note-sm{font-size:12px;color:var(--gm);margin-top:8px;}
+
+/* SECTIONS */
+.sec{width:100%;padding:96px 0;}
+.alt{background:var(--navy-mid);}
+.inn{max-width:1160px;margin:0 auto;padding:0 48px;}
+.tc{text-align:center;}
+
+.lbl{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--cyan);background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);padding:4px 14px;border-radius:100px;margin-bottom:16px;text-transform:uppercase;}
+.lbl-teal{color:var(--teal);background:rgba(0,201,200,.1);border-color:rgba(0,201,200,.2);}
+.ttl{font-size:clamp(22px,3.2vw,40px);font-weight:800;letter-spacing:-.03em;margin-bottom:10px;}
+.sub{font-size:14px;color:var(--gm);margin-bottom:48px;letter-spacing:-.01em;}
+
+/* GRIDS */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+
+/* CARD */
+.card{background:var(--navy-card);border:1px solid var(--bdr);border-radius:18px;padding:30px 26px;transition:all .28s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--blue),transparent);opacity:0;transition:opacity .28s;}
+.card:hover{transform:translateY(-4px);border-color:var(--bdr-b);}
+.card:hover::before{opacity:1;}
+.ci{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:18px;}
+.ci-r{background:rgba(239,68,68,.12);color:var(--red);}
+.ci-b{background:rgba(59,130,246,.12);color:var(--blue-lt);}
+.ci-t{background:rgba(0,201,200,.12);color:var(--teal);}
+.ci-c{margin:0 auto 18px;}
+.card h3{font-size:15px;font-weight:700;margin-bottom:10px;letter-spacing:-.03em;}
+.card p{font-size:13px;color:var(--gm);line-height:1.65;letter-spacing:-.01em;}
+.cl1{font-size:13px;font-weight:500;color:var(--gs);line-height:1.55;margin-bottom:2px;letter-spacing:-.01em;}
+.cl2{font-size:13px;font-weight:700;color:var(--white);line-height:1.55;letter-spacing:-.01em;}
+
+/* 1차수 결과 섹션 */
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.result-stats{display:flex;flex-direction:column;gap:16px;}
+.rs-card{background:var(--navy-card);border:1px solid var(--bdr);border-radius:16px;padding:24px 28px;display:flex;align-items:center;gap:20px;}
+.rs-num{font-size:44px;font-weight:900;letter-spacing:-.04em;line-height:1;color:var(--blue-lt);}
+.rs-num.teal{color:var(--teal);}
+.rs-unit{font-size:18px;font-weight:700;color:var(--gs);margin-left:2px;}
+.rs-label{font-size:13px;color:var(--gm);margin-top:4px;line-height:1.5;}
+.rs-badge{font-size:11px;font-weight:700;background:rgba(0,201,200,.12);color:var(--teal);border:1px solid rgba(0,201,200,.2);border-radius:100px;padding:3px 10px;display:inline-block;margin-top:6px;}
+
+/* 후기 카드 */
+.review-stack{display:flex;flex-direction:column;gap:14px;}
+.rv-card{background:var(--navy-card);border:1px solid var(--bdr);border-left:3px solid var(--blue);border-radius:0 14px 14px 0;padding:18px 22px;}
+.rv-card.tl{border-left-color:var(--teal);}
+.rv-q{font-size:22px;font-weight:900;color:var(--blue-lt);line-height:1;margin-bottom:8px;}
+.rv-card.tl .rv-q{color:var(--teal);}
+.rv-txt{font-size:14px;color:rgba(255,255,255,.82);line-height:1.7;}
+.rv-bottom{background:rgba(59,130,246,.08);border:1px solid var(--bdr-b);border-radius:14px;padding:20px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:4px;}
+.rv-bottom-label{font-size:12px;color:var(--gs);line-height:1.55;}
+.rv-bottom-label strong{display:block;font-size:20px;font-weight:800;color:var(--white);letter-spacing:-.03em;}
+.rv-bottom-num{text-align:right;}
+.rv-big{font-size:46px;font-weight:900;color:var(--white);letter-spacing:-.04em;line-height:1;}
+.rv-big span{font-size:20px;color:var(--gs);font-weight:600;}
+
+/* 2차수 강화 뱃지 */
+.enhance-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:48px;}
+.enhance-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,201,200,.1);border:1px solid rgba(0,201,200,.28);border-radius:100px;padding:10px 22px;font-size:14px;font-weight:700;color:var(--teal);}
+.enhance-badge span{font-size:16px;}
+
+/* INSIGHT */
+.ins-ttl{font-size:clamp(24px,3.8vw,46px);font-weight:800;letter-spacing:-.04em;margin-bottom:8px;}
+.ins-em{color:var(--blue-lt);}
+
+.voice{background:var(--navy-card);border:1px solid var(--bdr);border-radius:20px;padding:34px 30px;}
+.vtag{font-size:11px;color:var(--gm);letter-spacing:1px;margin-bottom:16px;}
+.vtxt{font-size:15px;font-weight:500;line-height:1.85;}
+
+/* BA */
+.ba{background:var(--navy-card);border:1px solid var(--bdr-b);border-radius:20px;overflow:hidden;}
+.ba-hd{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--bdr);}
+.ba-col{padding:16px 24px;font-size:12px;font-weight:700;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
+.ba-bef{background:rgba(239,68,68,.08);border-right:1px solid var(--bdr);color:var(--red);}
+.ba-aft{background:rgba(59,130,246,.1);color:var(--blue-lt);}
+.ba-bd{display:grid;grid-template-columns:1fr 1fr;}
+.ba-it{padding:20px 24px;display:flex;flex-direction:column;gap:6px;}
+.ba-itb{border-right:1px solid var(--bdr);}
+.ba-lb{font-size:12px;color:var(--gm);}
+.ba-vl{font-size:15px;font-weight:700;}
+.ba-vr{color:var(--red);}
+.ba-vb{color:var(--blue-lt);}
+.ba-sb{font-size:12px;color:var(--gm);margin-top:2px;}
+.ba-ft{border-top:1px solid var(--bdr);padding:16px 24px;font-size:14px;color:var(--gs);text-align:center;font-weight:500;}
+.ba-ft span{color:var(--blue-lt);font-weight:700;}
+
+/* CASE */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
+.cp{border-radius:20px;overflow:hidden;}
+.cp-hd{padding:15px 26px;font-size:12px;font-weight:800;letter-spacing:1.5px;display:flex;align-items:center;gap:8px;}
+.was-hd{background:rgba(239,68,68,.1);color:var(--red);border-bottom:1px solid rgba(239,68,68,.18);}
+.tobe-hd{background:rgba(59,130,246,.1);color:var(--blue-lt);border-bottom:1px solid var(--bdr-b);}
+.cp-bd{background:var(--navy-card);padding:8px 26px 20px;border:1px solid var(--bdr);border-top:none;border-radius:0 0 20px 20px;}
+.was-bd{border-color:rgba(239,68,68,.15);}
+.tobe-bd{border-color:var(--bdr-b);}
+.ci2{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--bdr);}
+.ci2:last-child{border-bottom:none;padding-bottom:0;}
+.cb{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.cb-r{background:rgba(239,68,68,.15);color:var(--red);}
+.cb-b{background:rgba(59,130,246,.15);color:var(--blue-lt);}
+.ci2 h4{font-size:13px;font-weight:700;margin-bottom:4px;letter-spacing:-.02em;}
+.ci2 p{font-size:12px;color:var(--gm);line-height:1.6;letter-spacing:-.01em;}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;}
+.stat{background:rgba(59,130,246,.07);border:1px solid var(--bdr-b);border-radius:14px;padding:20px 16px;text-align:center;}
+.sn{font-size:26px;font-weight:900;color:var(--blue-lt);letter-spacing:-.5px;}
+.su{font-size:13px;font-weight:500;color:var(--blue-lt);}
+.sl{font-size:12px;color:var(--gm);margin-top:6px;line-height:1.5;}
+
+/* FLOW */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);position:relative;margin-bottom:64px;}
+.fl{position:absolute;top:20px;left:calc(16.7% + 20px);right:calc(16.7% + 20px);height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));z-index:0;}
+.fs{display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px;position:relative;z-index:1;}
+.fn{width:40px;height:40px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-bottom:20px;box-shadow:0 0 22px rgba(59,130,246,.4);}
+.fs h4{font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-.03em;}
+.fs p{font-size:12px;color:var(--gm);line-height:1.65;letter-spacing:-.01em;}
+
+/* MARQUEE */
+.mq-wrap{overflow:hidden;width:100%;margin-top:28px;-webkit-mask-image:linear-gradient(90deg,transparent 0%,black 8%,black 92%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,black 8%,black 92%,transparent 100%);}
+.mq-track{display:flex;gap:14px;animation:marquee 22s linear infinite;width:max-content;}
+.mq-track:hover{animation-play-state:paused;}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.mtag{background:var(--navy-card);border:1px solid var(--bdr-b);border-radius:100px;padding:13px 28px;font-size:16px;font-weight:600;color:var(--gs);white-space:nowrap;cursor:default;flex-shrink:0;}
+.mtag:hover{background:rgba(59,130,246,.12);color:var(--blue-lt);}
+.mhl{background:rgba(0,201,200,.1);color:var(--teal);border-color:rgba(0,201,200,.3);}
+
+/* INFO TABLE */
+.info-box{background:var(--navy-card);border:1px solid var(--bdr);border-radius:20px;overflow:hidden;max-width:860px;margin:0 auto;}
+.itbl{width:100%;border-collapse:collapse;}
+.itbl tr{border-bottom:1px solid var(--bdr);}
+.itbl tr:last-child{border-bottom:none;}
+.itbl th{font-size:13px;font-weight:600;color:var(--blue-lt);padding:20px 28px;width:140px;vertical-align:top;white-space:nowrap;}
+.itbl td{font-size:15px;color:var(--gs);padding:20px 28px;line-height:1.7;}
+.itbl td strong{color:var(--white);}
+.td-hl{color:var(--teal)!important;font-weight:700!important;}
+
+/* FINAL */
+.final{padding:110px 24px 80px;text-align:center;position:relative;overflow:hidden;}
+.final::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(59,130,246,.09) 0%,transparent 70%);pointer-events:none;}
+.fi{position:relative;z-index:1;max-width:880px;margin:0 auto;}
+.f-eye{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:18px;}
+.f-ttl{font-size:clamp(22px,3.8vw,42px);font-weight:800;letter-spacing:-.04em;line-height:1.2;margin-bottom:14px;}
+.f-ttl span{color:var(--blue-lt);}
+.f-sub{font-size:15px;color:var(--gm);margin-bottom:18px;letter-spacing:-.01em;}
+.sat-row{display:inline-flex;align-items:center;gap:20px;background:rgba(59,130,246,.07);border:1px solid var(--bdr-b);border-radius:100px;padding:10px 28px;margin-bottom:8px;font-size:14px;color:var(--gs);flex-wrap:wrap;justify-content:center;}
+.sv{font-size:16px;font-weight:800;color:var(--blue-lt);}
+.sdv{width:1px;height:16px;background:var(--bdr);}
+.sat-note{font-size:12px;color:var(--gm);margin-bottom:28px;}
+
+.next-box{background:rgba(0,201,200,.06);border:1px solid rgba(0,201,200,.2);border-radius:16px;padding:24px 32px;max-width:680px;margin:32px auto 0;text-align:center;}
+.nl{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
+.nt{font-size:17px;font-weight:700;margin-bottom:6px;}
+.nd{font-size:13px;color:var(--gm);}
+
+footer{background:var(--navy-deep);border-top:1px solid var(--bdr);padding:36px 24px;text-align:center;}
+.fc{font-size:14px;color:var(--gm);line-height:2;}
+.fc a{color:var(--blue-lt);text-decoration:none;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.inn{padding:0 32px;}nav{padding:16px 32px;}}
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .nav-r{display:none;}
+  .inn{padding:0 20px;}
+  .sec{padding:64px 0;}
+  .g4{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:1fr;gap:16px;}
+  .g2{grid-template-columns:1fr;}
+  .case-grid{grid-template-columns:1fr;}
+  .flow{grid-template-columns:1fr;gap:36px;}
+  .fl{display:none;}
+  .ba-hd,.ba-bd{grid-template-columns:1fr;}
+  .ba-bef{border-right:none;border-bottom:1px solid var(--bdr);}
+  .ba-itb{border-right:none;border-bottom:1px solid var(--bdr);}
+  .stats{grid-template-columns:1fr;}
+  .result-grid{grid-template-columns:1fr;}
+  .itbl th{width:100px;font-size:12px;}
+  .itbl td{font-size:14px;}
+  .itbl th,.itbl td{padding:14px 16px;}
+  .sat-row{border-radius:16px;padding:16px 20px;}
+  .sdv{width:40px;height:1px;}
+  .deadline-banner{flex-direction:column;text-align:center;}
+}
+@media(max-width:480px){
+  .g4{grid-template-columns:1fr;}
+  .hero{padding:100px 16px 60px;}
+  .chips{gap:8px;}
+  .chip{font-size:11px;padding:6px 10px;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Maeil <span>AX</span> 2026</div>
+  <div class="nav-r">AX INSIDE 2026 <span class="nav-dot">•</span> One-Day Class 2nd</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hc">
+    <div class="badge badge-2nd">✅ AX INSIDE 사내 원데이클래스 2차수</div>
+    <h1 class="hero-title">개인의 <span class="hl">AX 경험</span>을<br>조직의 성과로</h1>
+    <p class="hero-sub">생성형AI &amp; VBA 기반 Excel 업무자동화 &amp; 데이터 활용</p>
+
+    <!-- 마감 배너 -->
+    <div class="deadline-banner">
+      <span class="dl-label">⚠️ 사전설문 및 교육신청 마감</span>
+      <span class="dl-date">5월 8일(금) 오후 15:00</span>
+      <a href="https://forms.office.com/r/aHHsWSL8cZ" class="dl-link" target="_blank" rel="noopener">지금 신청하기 →</a>
+    </div>
+
+    <!-- 날짜 강조 배너 -->
+    <div style="display:inline-flex;align-items:center;gap:12px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.35);border-radius:14px;padding:14px 32px;margin-bottom:16px;">
+      <span style="font-size:13px;color:var(--blue-lt);font-weight:700;letter-spacing:.05em;">📅 교육 일시</span>
+      <span style="width:1px;height:20px;background:rgba(59,130,246,.3);display:inline-block;"></span>
+      <span style="font-size:20px;font-weight:800;color:#ffffff;letter-spacing:-.03em;">5월 13일(수) &nbsp;14:00 ~ 17:30</span>
+    </div>
+    <p class="hero-desc">반복 업무를 줄이고, 데이터 기반 의사결정까지 연결되는<br>실무형 AX 실행 경험을 지금 시작하세요.</p>
+    <div class="chips">
+      <div class="chip">🔀 <strong>온·오프라인 병행</strong> 진행</div>
+      <div class="chip">📍 오프라인 센터포인트 광화문 필원 B강의장 <strong style="color:#ef4444;font-size:11px;background:rgba(239,68,68,.12);padding:2px 8px;border-radius:100px;margin-left:4px;">선착순 마감</strong></div>
+      <div class="chip">💻 온라인 Microsoft Teams <strong style="color:#60a5fa;font-size:11px;background:rgba(59,130,246,.12);padding:2px 8px;border-radius:100px;margin-left:4px;">실시간 비대면</strong></div>
+    </div>
+    <div class="cta-g">
+      <a href="https://forms.office.com/r/aHHsWSL8cZ" class="btn" target="_blank" rel="noopener">사전설문 및 교육신청 하기 →</a>
+      <p class="note-sm">👆 클릭 시 Microsoft Teams 사전 설문조사 페이지로 이동합니다</p>
+      <p class="dl">신청 마감: <strong>5월 8일(금) 오후 15:00</strong>까지</p>
+    </div>
+  </div>
+</div>
+
+<!-- 1차수 교육 결과 -->
+<div class="sec alt">
+  <div class="inn">
+    <div class="tc" style="margin-bottom:48px;">
+      <div class="lbl lbl-teal">1차수 교육 결과 · 4월 13일</div>
+      <h2 class="ttl">먼저 경험한 동료들의<br>이야기를 들어보세요</h2>
+      <p class="sub" style="margin-bottom:0;">참석자 160명의 실제 평가와 후기입니다</p>
+    </div>
+    <div class="result-grid">
+      <div class="result-stats">
+        <div class="rs-card">
+          <div>
+            <div style="font-size:13px;color:var(--gm);margin-bottom:6px;">종합 만족도</div>
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <span class="rs-num">4.83</span>
+              <span class="rs-unit">/ 5.0</span>
+            </div>
+            <div class="rs-label">전원 4점 이상 · 불만족 사례 없음</div>
+            <span class="rs-badge">사내교육 우수구간</span>
+          </div>
+        </div>
+        <div class="rs-card">
+          <div>
+            <div style="font-size:13px;color:var(--gm);margin-bottom:6px;">과정 추천도</div>
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <span class="rs-num teal" style="font-size:32px;">사내교육 우수 추천 구간</span>
+            </div>
+            <div class="rs-label">응답자 55%가 주변에 적극 추천</div>
+            <span class="rs-badge">1차수 참석자 160명</span>
+          </div>
+        </div>
+        <div class="rs-card">
+          <div>
+            <div style="font-size:13px;color:var(--gm);margin-bottom:6px;">현업 적용 의향</div>
+            <div style="display:flex;align-items:baseline;gap:4px;">
+              <span class="rs-num">4.62</span>
+              <span class="rs-unit">/ 5.0</span>
+            </div>
+            <div class="rs-label">"교육 직후부터 업무에 적용해봤어요"</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-stack">
+        <div class="rv-card">
+          <div class="rv-q">"</div>
+          <p class="rv-txt">VBA에 거부감을 덜 갖게 됐어요. 코딩을 몰라도 자동화가 가능하다는 걸 처음 알았습니다.</p>
+        </div>
+        <div class="rv-card tl">
+          <div class="rv-q">"</div>
+          <p class="rv-txt">현업에서 바로 쓸 수 있는 사례 중심이라 교육 직후부터 적용해볼 수 있었어요.</p>
+        </div>
+        <div class="rv-card tl">
+          <div class="rv-q">"</div>
+          <p class="rv-txt">아무것도 모르는 사람도 충분히 따라갈 수 있는 수준이었습니다.</p>
+        </div>
+        <div class="rv-bottom">
+          <div class="rv-bottom-label">
+            1차수 참석자 160명<br>실제 종합 만족도
+          </div>
+          <div class="rv-bottom-num">
+            <div class="rv-big">4.83<span> / 5.0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 2차수 강화 포인트 -->
+<div class="sec">
+  <div class="inn tc">
+    <div class="lbl">2차수 강화 포인트</div>
+    <h2 class="ttl">1차수 피드백을 반영해<br>더 실무적으로 다듬었습니다</h2>
+    <div class="enhance-row">
+      <div class="enhance-badge"><span>📊</span> 데이터 시각화 &amp; 대시보드 실습 강화</div>
+      <div class="enhance-badge"><span>📄</span> AI 기반 보고자료 작성 지원 확대</div>
+      <div class="enhance-badge"><span>🎯</span> 직군별 실무 적용 사례 추가</div>
+    </div>
+    <div class="g2" style="text-align:left;">
+      <div class="voice">
+        <div class="vtag">Internal Voice #1</div>
+        <p class="vtxt">"엑셀 함수는 많이 알지만, 정작 매달 반복되는 이 취합 업무를 어떻게 자동화할지 막막해요."</p>
+      </div>
+      <div class="ba">
+        <div class="ba-hd">
+          <div class="ba-col ba-bef">🔴 BEFORE</div>
+          <div class="ba-col ba-aft">🔵 AFTER</div>
+        </div>
+        <div class="ba-bd">
+          <div class="ba-it ba-itb">
+            <span class="ba-lb">이론 중심 접근</span>
+            <span class="ba-vl ba-vr">학습의 부담</span>
+            <span class="ba-sb">배우고 나면 끝</span>
+          </div>
+          <div class="ba-it">
+            <span class="ba-lb">실행 중심 접근</span>
+            <span class="ba-vl ba-vb">업무의 단축</span>
+            <span class="ba-sb">교육 당일 현업 적용</span>
+          </div>
+        </div>
+        <div class="ba-ft">우리는 학습이 아닌 <span>현업 문제해결을 위한 AI 활용</span>에 집중합니다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PAIN POINTS -->
+<div class="sec alt">
+  <div class="inn tc">
+    <div class="lbl">Pain Point</div>
+    <h2 class="ttl">혹시 이런 고민을 하고 계신가요?</h2>
+    <p class="sub">우리의 일상을 잠식하는 비효율적인 업무들</p>
+    <div class="g4">
+      <div class="card">
+        <div class="ci ci-r">⏰</div>
+        <h3>반복적인 엑셀 작업</h3>
+        <p class="cl1">매일 같은 데이터를 복사하고</p>
+        <p class="cl2">붙여넣는 시간</p>
+      </div>
+      <div class="card">
+        <div class="ci ci-r">📂</div>
+        <h3>데이터 취합/정리</h3>
+        <p class="cl1">흩어진 파일을 취합하느라</p>
+        <p class="cl2">정작 분석은 뒷전</p>
+      </div>
+      <div class="card">
+        <div class="ci ci-r">📊</div>
+        <h3>데이터 분석·시각화</h3>
+        <p class="cl1">데이터는 쌓이는데</p>
+        <p class="cl2">인사이트로 만들 방법을 모르겠다</p>
+      </div>
+      <div class="card">
+        <div class="ci ci-r">📝</div>
+        <h3>보고서 작성 부담</h3>
+        <p class="cl1">숫자 바뀔 때마다 보고서도</p>
+        <p class="cl2">처음부터 다시 만드는 무한 반복</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="sec">
+  <div class="inn tc">
+    <h2 class="ttl">AX 인사이드 원데이 클래스 특징</h2>
+    <p class="sub">실무 중심의 변화를 만드는 AX 전략</p>
+    <div class="g3">
+      <div class="card"><div class="ci ci-b ci-c">🎯</div><h3>실무중심 컨텐츠</h3><p>2025 AI 활용 우수사례 기반의 현업 밀착형 커리큘럼</p></div>
+      <div class="card"><div class="ci ci-b ci-c">👤</div><h3>비전공자 참석 가능</h3><p>코딩 지식이 없어도 누구나 쉽게 따라올 수 있는 단계별 가이드</p></div>
+      <div class="card"><div class="ci ci-b ci-c">✨</div><h3>교육 후 활용 중심</h3><p>학습에서 끝나지 않고 현업에서 즉시 자동화를 실현하는 결과물</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS CASE -->
+<div class="sec alt">
+  <div class="inn">
+    <div class="tc" style="margin-bottom:0;">
+      <div class="lbl">Operating Background</div>
+      <h2 class="ttl">현업에서 검증된 AX 사례를 확산합니다</h2>
+      <p class="sub">사내 AX 우수사례 — 우유안부 결산서 자동화 (영업지원팀 박지혜님)</p>
+    </div>
+    <div class="case-grid">
+      <div class="cp">
+        <div class="cp-hd was-hd">🔴 AS-WAS &nbsp;│&nbsp; 기존 수기 작업 구조</div>
+        <div class="cp-bd was-bd">
+          <div class="ci2"><div class="cb cb-r">1</div><div><h4>월 80개 결산 파일 수기 작성</h4><p>전국 72개 지역, DS 영업사원 4명이 직접 수기 작성</p></div></div>
+          <div class="ci2"><div class="cb cb-r">2</div><div><h4>파일 표준관리 부재</h4><p>지역·대리점별 80개+ 파일 서식 상이 → 본사 취합 후 재수정 불가피</p></div></div>
+          <div class="ci2"><div class="cb cb-r">3</div><div><h4>복사·붙여넣기 반복 + 휴먼에러</h4><p>고객정보 변동 시 80개 파일 개별 수정, 오류 가능성 지속 증가</p></div></div>
+          <div class="ci2"><div class="cb cb-r">4</div><div><h4>수혜자 증가로 업무공수 폭증</h4><p>2016년 934명 → 2025년 6,280명 확대, 수기 프로세스로 대응 한계</p></div></div>
+        </div>
+      </div>
+      <div class="cp">
+        <div class="cp-hd tobe-hd">🔵 TO-BE &nbsp;│&nbsp; ChatGPT × VBA 자동화</div>
+        <div class="cp-bd tobe-bd">
+          <div class="ci2"><div class="cb cb-b">1</div><div><h4>클릭 한 번으로 결산서 자동 생성</h4><p>'Y' 표시 → '결산서 생성하기' 버튼 → 결산서+배송내역 자동 생성</p></div></div>
+          <div class="ci2"><div class="cb cb-b">2</div><div><h4>ChatGPT 활용 VBA 코드 개발</h4><p>사전분석 → 코드생성 → 테스트 → 2025년 10월 결산부터 실무 적용 완료</p></div></div>
+          <div class="ci2"><div class="cb cb-b">3</div><div><h4>서식 표준화로 휴먼에러 제거</h4><p>양식 통일화로 오류 차단, 본사 별도 수정 작업 불필요</p></div></div>
+          <div class="ci2"><div class="cb cb-b">4</div><div><h4>확보 시간으로 Power BI 고도화</h4><p>자동화 여력으로 우유안부 Power BI 대시보드 구축 진행</p></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div><span class="sn">59</span><span class="su">/79개</span></div><div class="sl">결산서 자동화 달성<br>(74% 자동화)</div></div>
+      <div class="stat"><div><span class="sn">4h</span></div><div class="sl">월 업무시간 감축<br>(지역사업부 기준)</div></div>
+      <div class="stat"><div><span class="sn">4.83</span><span class="su">점</span></div><div class="sl">2차수 직전 과정 만족도<br>1차수 160명 참석</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<div class="sec">
+  <div class="inn tc">
+    <h2 class="ttl">이 교육을 통해 얻어가실 수 있는 것들</h2>
+    <p class="sub">실무 경쟁력을 높이는 확실한 변화</p>
+    <div class="g4">
+      <div class="card"><div class="ci ci-b ci-c" style="width:50px;height:50px;font-size:22px;">⚡</div><h3>일상업무 자동화</h3><p>반복적인 수작업 프로세스의 자동화 실현</p></div>
+      <div class="card"><div class="ci ci-b ci-c" style="width:50px;height:50px;font-size:22px;">📊</div><h3>데이터 시각화</h3><p>Gemini Canvas·NotebookLM으로 대시보드 즉시 제작</p></div>
+      <div class="card"><div class="ci ci-b ci-c" style="width:50px;height:50px;font-size:22px;">📄</div><h3>보고자료 작성</h3><p>AI 기반 자동 생성 고퀄리티 시각화 리포트</p></div>
+      <div class="card"><div class="ci ci-b ci-c" style="width:50px;height:50px;font-size:22px;">🎯</div><h3>의사결정 지원</h3><p>데이터 기반의 빠르고 정확한 판단</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- CURRICULUM -->
+<div class="sec alt">
+  <div class="inn tc">
+    <h2 class="ttl">교육 커리큘럼 Flow</h2>
+    <p class="sub" style="margin-bottom:56px;">체계적인 3단계 실행 프로세스</p>
+    <div class="flow">
+      <div class="fl"></div>
+      <div class="fs"><div class="fn">01</div><h4>AI 활용 우수사례 공유</h4><p>우유안부 결산 자동화<br>박지혜님 / 영업지원팀</p></div>
+      <div class="fs"><div class="fn">02</div><h4>자동화 실습 · 내것으로</h4><p>VBA &amp; 생성형AI 실습<br>김창중님 / 피플팀</p></div>
+      <div class="fs"><div class="fn">03</div><h4>데이터 시각화 · 보고 확장</h4><p>대시보드 &amp; 시각화<br>Gemini · NotebookLM 실습</p></div>
+    </div>
+    <p style="font-size:20px;font-weight:700;letter-spacing:-.3px;margin-bottom:6px;">2026 AX 인사이드 사내교육 주요 과정</p>
+    <p style="font-size:14px;color:var(--gm);margin-bottom:4px;">구성원 니즈와 추진방향을 고려한 핵심 커리큘럼</p>
+    <div class="mq-wrap">
+      <div class="mq-track">
+        <span class="mtag mhl">VBA&amp;AI 업무자동화(2) ✓ 현재</span>
+        <span class="mtag">데이터기반 의사결정</span>
+        <span class="mtag">AI Agent 제작</span>
+        <span class="mtag">커스텀 Agent 설계</span>
+        <span class="mtag">파워플랫폼 업무자동화</span>
+        <span class="mtag">지능형 챗봇제작</span>
+        <span class="mtag">AI마케팅 컨텐츠제작</span>
+        <span class="mtag">데이터 시각화</span>
+        <span class="mtag">AI 보고서 작성</span>
+        <span class="mtag mhl">VBA&amp;AI 업무자동화(2) ✓ 현재</span>
+        <span class="mtag">데이터기반 의사결정</span>
+        <span class="mtag">AI Agent 제작</span>
+        <span class="mtag">커스텀 Agent 설계</span>
+        <span class="mtag">파워플랫폼 업무자동화</span>
+        <span class="mtag">지능형 챗봇제작</span>
+        <span class="mtag">AI마케팅 컨텐츠제작</span>
+        <span class="mtag">데이터 시각화</span>
+        <span class="mtag">AI 보고서 작성</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INFO TABLE -->
+<div class="sec">
+  <div class="inn tc">
+    <h2 class="ttl">교육 안내</h2>
+    <p class="sub">신청 전 꼭 확인해주세요</p>
+    <div class="info-box">
+      <table class="itbl">
+        <tr><th>교육명</th><td><strong>생성형AI &amp; VBA 활용 Excel 업무자동화 원데이클래스 (2차수)</strong></td></tr>
+        <tr><th>교육 일시</th><td class="td-hl">5월 13일(수) 14:00 ~ 17:30 / 3.5H</td></tr>
+        <tr><th>오프라인</th><td><strong>센터포인트 광화문 필원 B강의장</strong><br><span style="font-size:13px;color:var(--gm);">선착순 마감 (공간 규모상 제한)</span></td></tr>
+        <tr><th>온라인</th><td><strong>Microsoft Teams</strong><br><span style="font-size:13px;color:var(--gm);">실시간 비대면 병행 · 신청자 링크 별도 안내</span></td></tr>
+        <tr><th>대상</th><td>필수 교육 대상자 우선 안내 후, 참석 희망자 추가 모집</td></tr>
+        <tr><th>신청 마감</th><td><strong style="color:var(--teal);">5월 8일(금) 오후 15:00</strong></td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA -->
+<div class="final">
+  <div class="fi">
+    <div class="f-eye">반복 업무에 지친 당신에게</div>
+    <h2 class="f-ttl">완벽히 알지 않아도 됩니다.<br><span>일을 줄이고 싶다면</span> 충분합니다.</h2>
+    <p class="f-sub">지금 하는 반복 업무, 이번 교육 하나로 바꿀 수 있습니다</p>
+    <div class="sat-row">
+      <span><span class="sv">4.83점</span> 만족도</span>
+      <div class="sdv"></div>
+      <span><span class="sv">160명</span> 1차수 참석</span>
+      <div class="sdv"></div>
+      <span>과정 추천도 <span class="sv">사내교육 우수 추천 구간</span></span>
+    </div>
+    <p class="sat-note">* 2026년 4월 1차수 원데이클래스 실시 결과</p>
+    <a href="https://forms.office.com/r/aHHsWSL8cZ" class="btn" target="_blank" rel="noopener">사전설문 및 교육신청 하기 →</a>
+    <p class="note-sm" style="margin-top:10px;">👆 클릭 시 Microsoft Teams 사전 설문조사 페이지로 이동합니다</p>
+    <p class="note-sm"><strong style="color:var(--teal);">⚠️ 신청 마감: 5월 8일(금) 오후 15:00</strong></p>
+    <div class="next-box">
+      <div class="nl">이후 AX 인사이드 과정 안내</div>
+      <div class="nt">데이터기반 의사결정 · AI Agent 제작 · 파워플랫폼 외</div>
+      <div class="nd">개인의 AI 활용경험을 조직의 자산으로 — 연간 원데이클래스 로드맵 지속 운영</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="fc">
+    문의: 매일유업 CHO 인재개발팀<br>
+    오준석 ✉️ <a href="mailto:junseok.oh@maeil.com">junseok.oh@maeil.com</a>
+    &nbsp;|&nbsp;
+    김지은 ✉️ <a href="mailto:genie@maeil.com">genie@maeil.com</a> (AX 꿀팁 관련)
+  </div>
+</footer>
+
+</body>
+</html>
